@@ -45,6 +45,7 @@ void draw() {
   ellipse(pt5X, pt5Y, ptDiameter, ptDiameter);
   ellipse(pt6X, pt6Y, ptDiameter, ptDiameter);
   ellipse(pt7X, pt7Y, ptDiameter, ptDiameter);
+  ellipse(pt8X, pt8Y, ptDiameter, ptDiameter);
   ellipse(pt9X, pt9Y, ptDiameter, ptDiameter);
   ellipse(pt13X, pt13Y, ptDiameter, ptDiameter);
   fill(white);
