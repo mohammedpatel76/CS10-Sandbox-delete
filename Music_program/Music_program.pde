@@ -1,73 +1,95 @@
 // Music Program
-float pt1X;
-float pt2X;
-float pt3X;
-float pt4X;
-float pt5X;
-float pt6X;
-float pt7X;
-float pt8X;
-float pt9X;
-float pt10X;
-float pt11X;
-float pt12X;
-float pt13X;
-float pt14X;
-float pt15X;
-float pt16X;
+/* Music Files
+Crock_Pot.mp3
+Joker_s_Lair.mp3
+Mission_Start.mp3
+*/
+/* Sound Effects
+Vehicle_Speeding.mp3
+Engine_Rev_Continuous.mp3
+Big_Explosion_Distant.mp3
+*/
+ 
 
-float pt1Y;
-float pt2Y;
-float pt3Y;
-float pt4Y;
-float pt5Y;
-float pt6Y;
-float pt7Y;
-float pt8Y;
-float pt9Y;
-float pt10Y;
-float pt11Y;
-float pt12Y;
-float pt13Y;
-float pt14Y;
-float pt15Y;
-float pt16Y;  
-float ptx1;
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
 
-float pty1;
-float ptx2; 
-float pty2;
-float ptx3;
-float pty3;
+//Global varibles 
+Minim minim;
+AudioPlayer song1;
+AudioMetaData songMetaData1;
+int loopNum = 1;
 
-{
+void setup() {
+minim = new Minim(this);
+song1 = minim.loadFile("Crock_Pot.mp3");
+songMetaData1 = song1.getMetaData();
 
-fill(Black); 
+  //Instructions
+  println("Start of Console");
+  println("Click the Canvas to Finish Starting this program");
+  println("Press P to Play and Pause, will rewind when at the end");
+  println("Press S to Stop and rewind to the beginning");
+  println("Press L to loop the song");
+  println("Press f or F to skip by 1000 milliseconds, or 1 second");
+  println("Press r or R to skip by 1000 milliseconds, or 1 second");
   
-  
-  color Black=#080000;
+  //Verifying Meta Data
+  println( "File Name: ", songMetaData1.fileName() );
+  println( "Length (in milliseconds): ", songMetaData1.length() );
+  println( "Length (in seconds): ", songMetaData1.length()/1000 );
+  println( "Length (in minutes & seconds): ", (songMetaData1.length()/1000)/60, " minute", (songMetaData1.length()/1000)-((songMetaData1.length()/1000)/60 * 60), " seconds" );
+  println( "Title: ", songMetaData1.title() );
+  println( "Author: ", songMetaData1.author() ); 
+  println( "Composer: ", songMetaData1.composer() ); 
+  println( "Orchestra: ", songMetaData1.orchestra() );
+  println( "Album: ", songMetaData1.album() );
+  println( "Disk: ", songMetaData1.disc() );
+  println( "Publisher: ", songMetaData1.publisher() );
+  println( "Date Release: ", songMetaData1.date() );
+  println( "Copyright: ", songMetaData1.copyright() );
+  println( "Comment: ", songMetaData1.comment() );
+  println( "Lyrics: ", songMetaData1.lyrics() );
+  println( "Track: ", songMetaData1.track() );
+  println( "Genre: ", songMetaData1.genre() );
+  println( "Encoded: ", songMetaData1.encoded() ); 
 }
-  void setup() {
-    
-    size(600,500);
+
+void draw() {
+}
+
+void keyPressed() {
+  if ( key == 'p' || key == 'P' ) { 
+    if ( song1.isPlaying() ) {
+      song1.pause();
+    } else if ( song1.position() == song1.length() ) {
+      song1.rewind();
+      song1.play();
+    } else {
+      song1.play();
+    }
+  }
   //
-  pt1X = pt5X = pt9X = pt13X = width*0;
-  pt2X = pt6X = pt10X = pt14X = width*1/3;
-  pt3X = pt7X = pt11X = pt15X = width*2/3;
-  pt4X = pt8X = pt12X = pt16X = width*3/3;
+  if (key == 's' || key == 'S') {
+    if ( song1.isPlaying() ) {
+      song1.pause();
+      song1.rewind();
+    } else { 
+      song1.rewind();
+    }
+  }
   //
-  pt1Y = pt2Y = pt3Y = pt4Y = height*0;
-  pt5Y = pt6Y = pt7Y = pt8Y = height*1/3;
-  pt9Y = pt10Y = pt11Y = pt12Y = height*2/3;
-  pt13Y = pt14Y = pt15Y = pt16Y= height*3/3;
-  
-  Fill(black);
-beginShape();
-vertex(30, 20);
-vertex(85, 20);
-vertex(85, 75);
-vertex(30, 75);
-endShape(CLOSE);
+  if( key == 'l' || key == 'L' ) song1.loop(loopNum);
+
 
   
-  }
+
+  if ( key == 'f' || key == 'F') song1.skip(1000); 
+  if ( key == 'r' || key == 'R') song1.skip(-1000); 
+}
+void mousePressed() {
+}
